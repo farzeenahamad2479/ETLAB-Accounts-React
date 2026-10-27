@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AccountsTabs from "../components/AccountsTabs";
 import "./BankDetails.css";
 
@@ -42,6 +42,23 @@ function BankDetails() {
     const [errors, setErrors] = useState({});
     const [pendingRequest, setPendingRequest] = useState(loadRequest);
     const [pageMessage, setPageMessage] = useState("");
+
+    useEffect(() => {
+        try {
+            if (pendingRequest) {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(pendingRequest)
+                );
+            } else {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+        } catch {
+            setPageMessage(
+                "Could not synchronize the request with browser storage."
+            );
+        }
+    }, [pendingRequest]);
 
     const handlePrint = () => window.print();
     const handleGeneratePDF = () => window.print();
@@ -149,15 +166,6 @@ function BankDetails() {
             submittedAt: new Date().toLocaleString(),
         };
 
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(request));
-        } catch {
-            setPageMessage(
-                "Could not save the request in this browser. Please check browser storage settings."
-            );
-            return;
-        }
-
         setPendingRequest(request);
         setErrors({});
         setShowForm(false);
@@ -180,13 +188,6 @@ function BankDetails() {
         );
 
         if (!confirmed) return;
-
-        try {
-            localStorage.removeItem(STORAGE_KEY);
-        } catch {
-            setPageMessage("Could not remove the request from browser storage.");
-            return;
-        }
 
         setPendingRequest(null);
         setPageMessage("The pending demo request has been cancelled.");
