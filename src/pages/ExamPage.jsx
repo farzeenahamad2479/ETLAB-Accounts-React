@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from "react";
-import "./App.css";
+
+import "../App.css";
 
 const sampleExams = [
   {
@@ -110,16 +110,6 @@ const sampleExams = [
       },
     ],
   },
-];
-
-const navItems = [
-  ["⌂", "Dashboard"],
-  ["▤", "Attendance"],
-  ["☑", "Results"],
-  ["▦", "TimeTable"],
-  ["▦", "Assignments"],
-  ["▦", "Materials"],
-  ["▦", "User Manual"],
 ];
 
 function ExamAttempt({ exam, onBack }) {
@@ -322,8 +312,8 @@ function ExamAttempt({ exam, onBack }) {
   );
 }
 
-export default function App() {
-  const [activePage, setActivePage] = useState("Quiz/Exams");
+
+export default function ExamPage() {
   const [selectedExam, setSelectedExam] = useState(null);
   const [filter, setFilter] = useState("All");
 
@@ -342,152 +332,107 @@ export default function App() {
     (exam) => filter === "All" || exam.status === filter,
   );
 
+  if (selectedExam) {
+    return (
+      <div className="etlab-app exam-page">
+        <ExamAttempt
+          exam={selectedExam}
+          onBack={() => setSelectedExam(null)}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="etlab-app">
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-symbol">◔</span>
-          <span className="brand-name">etlab</span>
-        </div>
-
-        <div className="college-name">TKM College of Engineering</div>
-
-        <div className="topbar-right">
-          <button>♟ KEVIN REJI⌄</button>
-          <button>✉ Messages <b className="message-count">0</b>⌄</button>
-          <button>➜ Logout</button>
-        </div>
-      </header>
-
-      <div className="app-body">
-        <aside className="sidebar">
-          {navItems.map(([symbol, label]) => (
-            <button
-              key={label}
-              className={`nav-item ${label === activePage ? "nav-active" : ""}`}
-              onClick={() => {
-                setActivePage(label);
-                setSelectedExam(null);
-              }}
-            >
-              <span className="nav-symbol">{symbol}</span>
-              <span>{label}</span>
-            </button>
-          ))}
-        </aside>
-
-        <main className="main-panel">
-          <div className="breadcrumb">
-            <span>◆</span>
-            <button
-              onClick={() => {
-                setActivePage("Dashboard");
-                setSelectedExam(null);
-              }}
-            >
-              Home
-            </button>
-            <span>›</span>
-            <strong>{selectedExam ? selectedExam.name : activePage}</strong>
+    <div className="etlab-app exam-page">
+      <main className="main-panel">
+        <div className="content-area">
+          <div className="table-title">
+            <span className="document-icon">▰</span>
+            <span>Quiz/Exams</span>
           </div>
 
-          {selectedExam ? (
-            <ExamAttempt exam={selectedExam} onBack={() => setSelectedExam(null)} />
-          ) : (
-            <div className="content-area">
-              <div className="table-title">
-                <span className="document-icon">▰</span>
-                <span>{activePage}</span>
-              </div>
+          <div className="exam-filters">
+            <span>Available Exams</span>
+            <select
+              value={filter}
+              onChange={(event) => setFilter(event.target.value)}
+              aria-label="Filter exams by status"
+            >
+              <option value="All">All Exams</option>
+              <option value="Available">Available</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
 
-              {activePage === "Quiz/Exams" ? (
-                <>
-                  <div className="exam-filters">
-                    <span>Quiz/Exams</span>
-                    <select value={filter} onChange={(event) => setFilter(event.target.value)}>
-                      <option value="All">All Exams</option>
-                      <option value="Available">Available</option>
-                      <option value="Upcoming">Upcoming</option>
-                      <option value="Completed">Completed</option>
-                    </select>
-                  </div>
-
-                  <div className="table-scroll">
-                    <table className="exam-table">
-                      <thead>
-                        <tr>
-                          <th>S.No</th>
-                          <th>Exam</th>
-                          <th>Subject</th>
-                          <th>Type</th>
-                          <th>Start Time</th>
-                          <th>End Time</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredExams.map((exam, index) => (
-                          <tr key={exam.id}>
-                            <td>{index + 1}</td>
-                            <td>
-                              <button
-                                className="exam-link"
-                                onClick={() => openExam(exam)}
-                              >
-                                {exam.name}
-                              </button>
-                            </td>
-                            <td>
-                              {exam.subject}
-                              <small className="subject-code">{exam.code}</small>
-                            </td>
-                            <td>{exam.type}</td>
-                            <td>{exam.start}</td>
-                            <td>{exam.end}</td>
-                            <td>
-                              <button
-                                className={`action-button ${exam.status === "Completed" ? "action-disabled" : ""}`}
-                                onClick={() => openExam(exam)}
-                              >
-                                {exam.status === "Available"
-                                  ? "Start Exam"
-                                  : exam.status === "Upcoming"
-                                    ? "View"
-                                    : "Completed"}
-                              </button>
-                              <div className={`status-label status-${exam.status.toLowerCase()}`}>
-                                {exam.status}
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                        {filteredExams.length === 0 && (
-                          <tr>
-                            <td colSpan="7" className="empty-row">No exams found.</td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              ) : (
-                <div className="placeholder-content">
-                  <h3>{activePage}</h3>
-                  <p>This section is a placeholder for now.</p>
-                  <button className="primary-button" onClick={() => setActivePage("Quiz/Exams")}>
-                    Return to Quiz/Exams
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-
-          <footer className="page-footer">
-            <span>Page Generated in 0.13350 seconds</span>
-            <span>© 2026 Etuwa Concepts, All rights reserved.</span>
-          </footer>
-        </main>
-      </div>
+          <div className="table-scroll">
+            <table className="exam-table">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Exam</th>
+                  <th>Subject</th>
+                  <th>Type</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredExams.map((exam, index) => (
+                  <tr key={exam.id}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <button
+                        className="exam-link"
+                        onClick={() => openExam(exam)}
+                        disabled={exam.status === "Completed"}
+                      >
+                        {exam.name}
+                      </button>
+                    </td>
+                    <td>
+                      {exam.subject}
+                      <small className="subject-code">{exam.code}</small>
+                    </td>
+                    <td>{exam.type}</td>
+                    <td>{exam.start}</td>
+                    <td>{exam.end}</td>
+                    <td>
+                      <button
+                        className={`action-button ${
+                          exam.status !== "Available" ? "action-disabled" : ""
+                        }`}
+                        onClick={() => openExam(exam)}
+                        disabled={exam.status === "Completed"}
+                      >
+                        {exam.status === "Available"
+                          ? "Start Exam"
+                          : exam.status === "Upcoming"
+                            ? "View"
+                            : "Completed"}
+                      </button>
+                      <div
+                        className={`status-label status-${exam.status.toLowerCase()}`}
+                      >
+                        {exam.status}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {filteredExams.length === 0 && (
+                  <tr>
+                    <td colSpan="7" className="empty-row">
+                      No exams found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

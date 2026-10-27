@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Topbar from "./components/Topbar";
 import Sidebar from "./components/Sidebar";
 import Breadcrumb from "./components/Breadcrumb";
-
 import SelectFees from "./pages/SelectFees";
 import Dues from "./pages/Dues";
 import Transport from "./pages/Transport";
@@ -12,6 +11,7 @@ import Hostel from "./pages/Hostel";
 import Wallet from "./pages/Wallet";
 import Receipts from "./pages/Receipts";
 import BankDetails from "./pages/BankDetails";
+import ExamPage from "./pages/ExamPage";
 
 import "./App.css";
 
@@ -41,6 +41,8 @@ function App() {
                             <Route path="/accounts/wallet" element={<Wallet />} />
                             <Route path="/accounts/receipts" element={<Receipts />} />
                             <Route path="/accounts/bank-details" element={<BankDetails />} />
+                            <Route path="/exam" element={<ExamPage />} />
+
                         </Routes>
                     </main>
                 </div>

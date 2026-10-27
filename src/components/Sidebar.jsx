@@ -2,13 +2,8 @@
 import { NavLink } from "react-router-dom";
 
 const menuItems = [
-    { label: "Dashboard", path: "/", icon: "◆" },
-    { label: "Attendance", path: "/attendance", icon: "▤" },
-    { label: "Results", path: "/results", icon: "☑" },
-    { label: "Time Table", path: "/timetable", icon: "▦" },
-    { label: "Assignments", path: "/assignments", icon: "▧" },
-    { label: "Materials", path: "/materials", icon: "▧" },
-    { label: "User Manual", path: "/user-manual", icon: "▦" },
+    { label: "Exam", path: "/exam", icon: "▦" },
+    { label: "Accounts", path: "/", icon: "▦" },
 ];
 
 function Sidebar() {
@@ -30,7 +25,6 @@ function Sidebar() {
                 ))}
             </nav>
 
-            <div className="sidebar-footer">ETLAB Student Portal</div>
         </aside>
     );
 }
