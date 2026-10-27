@@ -25,20 +25,38 @@ const initialForm = {
     mobile: "",
 };
 
+const STORAGE_KEY = "etlabBankUpdateRequest";
+
+function loadRequest() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch {
+        return null;
+    }
+}
+
 function BankDetails() {
     const [showForm, setShowForm] = useState(false);
     const [form, setForm] = useState(initialForm);
     const [errors, setErrors] = useState({});
-    const [message, setMessage] = useState(null);
+    const [pendingRequest, setPendingRequest] = useState(loadRequest);
+    const [pageMessage, setPageMessage] = useState("");
 
     const handlePrint = () => window.print();
-
     const handleGeneratePDF = () => window.print();
 
     function handleRequestUpdate() {
+        if (pendingRequest?.status === "Pending Approval") {
+            setPageMessage(
+                "You already have a pending bank details update request."
+            );
+            return;
+        }
+
         setForm(initialForm);
         setErrors({});
-        setMessage(null);
+        setPageMessage("");
         setShowForm(true);
     }
 
@@ -47,7 +65,7 @@ function BankDetails() {
 
         setForm((previous) => ({
             ...previous,
-            [name]: value,
+            [name]: name === "ifsc" ? value.toUpperCase() : value,
         }));
 
         setErrors((previous) => ({
@@ -60,7 +78,7 @@ function BankDetails() {
                     : previous.confirmAccountNumber,
         }));
 
-        setMessage(null);
+        setPageMessage("");
     }
 
     function handleSubmit(event) {
@@ -101,12 +119,9 @@ function BankDetails() {
         if (!form.ifsc.trim()) {
             newErrors.ifsc = "Enter the IFSC code.";
         } else if (
-            !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(
-                form.ifsc.trim().toUpperCase()
-            )
+            !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(form.ifsc.trim())
         ) {
-            newErrors.ifsc =
-                "Enter a valid IFSC code (e.g. ABCD0123456).";
+            newErrors.ifsc = "Enter a valid 11-character IFSC code.";
         }
 
         if (!form.mobile.trim()) {
@@ -118,26 +133,63 @@ function BankDetails() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-            setMessage({
-                type: "error",
-                text: "Please correct the errors below.",
-            });
+            setPageMessage("Please correct the errors in the form.");
             return;
         }
 
-        // Frontend demonstration only; nothing is sent or saved.
+        const request = {
+            id: Date.now(),
+            accountHolder: form.accountHolder.trim(),
+            accountNumber: form.accountNumber.trim(),
+            bankName: form.bankName.trim(),
+            branchName: form.branchName.trim(),
+            ifsc: form.ifsc.trim(),
+            mobile: form.mobile.trim(),
+            status: "Pending Approval",
+            submittedAt: new Date().toLocaleString(),
+        };
+
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(request));
+        } catch {
+            setPageMessage(
+                "Could not save the request in this browser. Please check browser storage settings."
+            );
+            return;
+        }
+
+        setPendingRequest(request);
         setErrors({});
-        setMessage({
-            type: "success",
-            text: "Form validated successfully! This is a demo only; no bank update request was submitted.",
-        });
+        setShowForm(false);
+        setForm(initialForm);
+        setPageMessage(
+            "Your update request has been saved. Its current status is Pending Approval."
+        );
     }
 
     function handleCancel() {
         setShowForm(false);
         setForm(initialForm);
         setErrors({});
-        setMessage(null);
+        setPageMessage("");
+    }
+
+    function handleCancelRequest() {
+        const confirmed = window.confirm(
+            "Are you sure you want to cancel your pending update request?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            localStorage.removeItem(STORAGE_KEY);
+        } catch {
+            setPageMessage("Could not remove the request from browser storage.");
+            return;
+        }
+
+        setPendingRequest(null);
+        setPageMessage("The pending demo request has been cancelled.");
     }
 
     return (
@@ -198,6 +250,84 @@ function BankDetails() {
                 </div>
             </section>
 
+            {pageMessage && (
+                <div
+                    className="bank-page-message"
+                    role="status"
+                >
+                    {pageMessage}
+                </div>
+            )}
+
+            {pendingRequest && (
+                <section className="bank-update-panel">
+                    <div className="bank-update-heading">
+                        <span>Submitted Bank Update Request</span>
+                        <span className="bank-status">
+                            {pendingRequest.status}
+                        </span>
+                    </div>
+
+                    <div className="bank-details-content">
+                        <p className="bank-form-note">
+                            Your requested changes are waiting for approval.
+                            Your existing bank details above have not been changed.
+                        </p>
+
+                        <table className="bank-details-table">
+                            <tbody>
+                                <tr>
+                                    <th>Account Holder Name</th>
+                                    <td>{pendingRequest.accountHolder}</td>
+                                </tr>
+                                <tr>
+                                    <th>Bank Account Number</th>
+                                    <td>
+                                        {"•".repeat(
+                                            Math.max(
+                                                0,
+                                                pendingRequest.accountNumber.length - 4
+                                            )
+                                        )}
+                                        {pendingRequest.accountNumber.slice(-4)}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Bank Name</th>
+                                    <td>{pendingRequest.bankName}</td>
+                                </tr>
+                                <tr>
+                                    <th>Branch Name</th>
+                                    <td>{pendingRequest.branchName}</td>
+                                </tr>
+                                <tr>
+                                    <th>IFSC Code</th>
+                                    <td>{pendingRequest.ifsc}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mobile Number</th>
+                                    <td>{pendingRequest.mobile}</td>
+                                </tr>
+                                <tr>
+                                    <th>Submitted At</th>
+                                    <td>{pendingRequest.submittedAt}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div className="bank-form-actions">
+                            <button
+                                type="button"
+                                className="bank-cancel-button"
+                                onClick={handleCancelRequest}
+                            >
+                                Cancel Request
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {showForm && (
                 <section className="bank-update-panel">
                     <div className="bank-update-heading">
@@ -218,8 +348,8 @@ function BankDetails() {
                         noValidate
                     >
                         <p className="bank-form-note">
-                            Enter the details you want to request for update.
-                            This demo does not submit or store bank details.
+                            Enter the bank details you want to update.
+                            This frontend demo saves the request in this browser only.
                         </p>
 
                         <div className="bank-form-grid">
@@ -332,9 +462,7 @@ function BankDetails() {
                             </div>
 
                             <div className="bank-form-field">
-                                <label htmlFor="mobile">
-                                    Mobile Number *
-                                </label>
+                                <label htmlFor="mobile">Mobile Number *</label>
                                 <input
                                     id="mobile"
                                     name="mobile"
@@ -353,15 +481,6 @@ function BankDetails() {
                             </div>
                         </div>
 
-                        {message && (
-                            <div
-                                className={`bank-form-message ${message.type}`}
-                                role={message.type === "error" ? "alert" : "status"}
-                            >
-                                {message.text}
-                            </div>
-                        )}
-
                         <div className="bank-form-actions">
                             <button
                                 type="button"
@@ -375,7 +494,7 @@ function BankDetails() {
                                 type="submit"
                                 className="bank-submit-button"
                             >
-                                Validate Request
+                                Submit Request
                             </button>
                         </div>
                     </form>

@@ -272,3 +272,136 @@
         display: none;
     }
 }
+
+/* Submitted bank update request */
+
+.bank-page-message {
+    margin-top: 16px;
+    padding: 12px 15px;
+    border: 1px solid #b6dfc0;
+    border-radius: 4px;
+    background: #eefaf0;
+    color: #216e35;
+    line-height: 1.5;
+}
+
+.bank-update-panel {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.bank-update-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 15px;
+    background: linear-gradient(#fff, #e8e8e8);
+    border-bottom: 1px solid #ccc;
+    color: #52677b;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.bank-update-form {
+    padding: 20px;
+}
+
+.bank-form-note {
+    margin: 0 0 18px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.bank-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.bank-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.bank-form-field label {
+    color: #52677b;
+    font-weight: 600;
+}
+
+.bank-form-field input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 39px;
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font: inherit;
+}
+
+.bank-form-field input:focus {
+    border-color: #337ab7;
+    outline: 2px solid rgba(51, 122, 183, 0.15);
+}
+
+.bank-field-error {
+    color: #c62828;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.bank-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.bank-form-actions button {
+    min-height: 38px;
+    padding: 9px 15px;
+    border-radius: 4px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.bank-cancel-button {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+}
+
+.bank-submit-button {
+    border: 1px solid #286090;
+    background: #337ab7;
+    color: #fff;
+}
+
+.bank-submit-button:hover {
+    background: #286090;
+}
+
+@media (max-width: 700px) {
+    .bank-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bank-update-form {
+        padding: 12px;
+    }
+}
+
+@media print {
+    .bank-update-panel,
+    .bank-page-message {
+        display: none !important;
+    }
+}
+
