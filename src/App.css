@@ -1,184 +1,1103 @@
-.counter {
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #222;
+  background: #fff;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  background: #fff;
+}
+
+/* Original dark ETLAB header */
+.topbar {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(#414141, #222);
+  color: #ddd;
+  border-bottom: 1px solid #555;
+  padding-left: 28px;
+}
+
+.brand {
+  font-size: 29px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  width: 175px;
+  color: #ddd;
+}
+
+.college-name {
+  font-size: 14px;
+  flex: 1;
+}
+
+.topbar-actions {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.top-action {
+  background: linear-gradient(#454545, #292929);
+  border: 1px solid #555;
+  border-top: 0;
+  border-bottom: 0;
+  color: #ccc;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.top-action:hover {
+  background: #505050;
+}
+
+.message-count {
+  display: inline-block;
+  margin: 0 5px;
+  background: #c94a4a;
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  padding: 2px 5px;
+}
+
+/* Sidebar */
+.app-body {
+  display: flex;
+  min-height: calc(100vh - 45px);
+}
+
+.sidebar {
+  width: 180px;
+  flex-shrink: 0;
+  background: #414141;
+  border-right: 1px solid #555;
+}
+
+.sidebar-link {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 27px;
+  padding: 0 27px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.sidebar-link:hover {
+  background: #383838;
+  color: #fff;
+}
+
+.home-icon {
   font-size: 16px;
-  padding: 5px 10px;
+  color: #aaa;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+}
+
+.breadcrumb {
+  height: 43px;
+  background: linear-gradient(#f1f1f1, #ddd);
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 24px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.breadcrumb-home {
+  color: #888;
+}
+
+.breadcrumb .separator {
+  color: #aaa;
+  font-size: 21px;
+}
+
+.breadcrumb strong {
+  color: #111;
+}
+
+/* Main Accounts navigation */
+.accounts-page {
+  padding: 10px 22px 30px;
+}
+
+.accounts-tabs {
+  min-height: 49px;
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(#fff, #f6f6f6);
+  border: 1px solid #e2e2e2;
   border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  box-shadow: 0 1px 2px #00000018;
+  overflow-x: auto;
+  margin-bottom: 19px;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
+.accounts-tab {
+  padding: 0 13px;
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  align-items: center;
+  text-decoration: none;
+  color: #080808;
+  white-space: nowrap;
+  font-size: 15px;
+  border: 0;
 }
 
-#next-steps {
+.accounts-tab:first-child {
+  font-size: 23px;
+  color: #999;
+  padding: 0 22px;
+}
+
+.accounts-tab:hover {
+  background: #eee;
+}
+
+.accounts-tab.selected {
+  background: #222;
+  color: white;
+}
+
+/* Student Fee subsection */
+.sub-tabs {
+  min-height: 47px;
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  align-items: stretch;
+  background: linear-gradient(#fff, #f5f5f5);
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px #00000018;
+  margin-bottom: 40px;
+  overflow-x: auto;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.sub-tab {
+  border: 0;
+  background: transparent;
+  padding: 0 13px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+.sub-tab.active {
+  color: #fff;
+  background: #222;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
+/* Fees table */
+.fee-table-wrap,
+.receipt-table-wrap {
   width: 100%;
+  overflow-x: auto;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+.fee-table,
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.fee-table {
+  min-width: 1000px;
+  border: 1px solid #ddd;
+}
+
+.fee-table th,
+.receipt-table th {
+  background: linear-gradient(#fff, #e8e8e8);
+  color: #555;
+  font-weight: bold;
+  text-align: left;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 12px 10px;
+}
+
+.fee-table th {
+  height: 61px;
+  vertical-align: bottom;
+  line-height: 21px;
+}
+
+.fee-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.student-cell {
+  background: #eee;
+  width: 292px;
+  min-width: 292px;
+  line-height: 21px;
+  vertical-align: top;
+}
+
+.student-photo-placeholder {
+  width: 60px;
+  height: 60px;
+  border: 3px solid #333;
+  outline: 1px solid #aaa;
+  background: #ddd;
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #555;
+}
+
+.empty-fees {
+  height: 155px;
+  background: white;
+}
+
+/* Receipts */
+.receipts-section {
+  margin-top: 22px;
+}
+
+.receipts-section h2 {
+  color: #999;
+  font-weight: normal;
+  font-size: 21px;
+  margin: 0 0 43px;
+}
+
+.results-count {
+  text-align: right;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.receipt-table {
+  min-width: 900px;
+}
+
+.receipt-table th {
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.receipt-table td {
+  padding: 13px 10px;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+.receipt-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.print-button {
+  width: 42px;
+  height: 34px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: linear-gradient(#fff, #e5e5e5);
+  color: #444;
+  font-size: 18px;
+}
+
+.print-button:hover {
+  background: #ddd;
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    padding-left: 12px;
   }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+  .brand {
+    width: auto;
+    margin-right: 20px;
   }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+
+  .college-name {
+    font-size: 12px;
   }
+
+  .top-action {
+    padding: 0 7px;
+    font-size: 11px;
+  }
+
+  .sidebar {
+    width: 150px;
+  }
+
+  .sidebar-link {
+    padding: 0 16px;
+    gap: 15px;
+  }
+
+  .accounts-page {
+    padding: 10px;
+  }
+
+  .sub-tabs {
+    margin-bottom: 25px;
+  }
+}
+
+@media print {
+  .topbar,
+  .sidebar,
+  .breadcrumb,
+  .accounts-tabs,
+  .sub-tabs,
+  .print-button {
+    display: none !important;
+  }
+
+  .app-body {
+    display: block;
+  }
+
+  .accounts-page {
+    padding: 0;
+  }
+}
+
+.student-photo {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 3px solid #333;
+  outline: 1px solid #aaa;
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+/* Fine-tuning to match the original ETLAB screenshot */
+
+body {
+  font-size: 13px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  height: 43px;
+  gap: 11px;
+}
+
+.accounts-tab {
+  font-size: 14px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.accounts-tab:first-child {
+  font-size: 22px;
+}
+
+.sub-tab {
+  font-size: 13px;
+}
+
+.fee-table th,
+.receipt-table th {
+  font-size: 13px;
+  padding: 10px;
+}
+
+.fee-table th {
+  height: 61px;
+}
+
+.fee-table td,
+.receipt-table td {
+  font-size: 13px;
+}
+
+.student-cell {
+  width: 292px;
+  min-width: 292px;
+  height: 155px;
+  line-height: 20px;
+  padding: 10px !important;
+}
+
+.student-photo {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 3px solid #333;
+  outline: 1px solid #aaa;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.receipts-section {
+  margin-top: 20px;
+}
+
+.receipts-section h2 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 35px;
+  font-weight: normal;
+}
+
+.results-count {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.receipt-table td {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.print-button {
+  width: 42px;
+  height: 32px;
+}
+
+
+/* Dues page */
+.dues-page {
+  padding: 10px 22px 0;
+  background: #eee;
+  min-height: calc(100vh - 88px);
+}
+
+.dues-panel {
+  background: #fff;
+  border: 1px solid #d0d0d0;
+}
+
+.dues-panel-heading {
+  height: 43px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ccc;
+  background: linear-gradient(#fff, #e5e5e5);
+  color: #666;
+  font-size: 18px;
+}
+
+.panel-menu-icon {
+  width: 41px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid #ddd;
+  color: #888;
+}
+
+.student-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 24px;
+  padding: 14px;
+  align-items: start;
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.details-table th,
+.details-table td {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 9px;
+  line-height: 20px;
+}
+
+.details-table th {
+  width: 40%;
+  text-align: right;
+  font-weight: normal;
+  color: #555;
+  background: linear-gradient(#fff, #e9e9e9);
+}
+
+.details-table td {
+  color: #333;
+  background: #fff;
+}
+
+.dues-student-photo {
+  padding-left: 0;
+}
+
+.dues-student-photo img {
+  display: block;
+  width: 118px;
+  height: 118px;
+  object-fit: cover;
+  padding: 4px;
+  border: 2px solid #444;
+  outline: 1px solid #aaa;
+}
+
+.wallet-balance {
+  padding: 5px 14px 20px;
+  color: #00e;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.dues-tabs {
+  display: flex;
+  align-items: end;
+  gap: 0;
+  margin: 0 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dues-tab {
+  padding: 11px 15px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #1683c5;
+  font-size: 13px;
+}
+
+.dues-tab.active {
+  color: #555;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: #fff;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: -1px;
+}
+
+.fee-collection,
+.applicable-fees,
+.due-receipts {
+  padding: 0 14px;
+}
+
+.fee-collection {
+  margin-top: 25px;
+}
+
+.fee-collection h2 {
+  font-size: 28px;
+  margin: 0 0 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.applicable-fees {
+  margin-top: 30px;
+}
+
+.applicable-fees h2 {
+  color: #999;
+  font-weight: normal;
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.due-receipts {
+  margin-top: 25px;
+  padding-bottom: 40px;
+}
+
+.due-receipts h3 {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0 0 8px;
+  color: #333;
+}
+
+.dues-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dues-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: #555;
+}
+
+.dues-table th {
+  text-align: left;
+  padding: 11px 10px;
+  background: linear-gradient(#fff, #e7e7e7);
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.dues-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.collection-table th {
+  height: 43px;
+}
+
+.collection-table th:first-child {
+  width: 36%;
+}
+
+.collection-table th:not(:first-child) {
+  width: 17%;
+}
+
+.total-label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.empty-message {
+  font-style: italic;
+  color: #444;
+  padding: 12px !important;
+}
+
+.dues-history {
+  padding: 25px 14px 60px;
+  min-height: 260px;
+}
+
+.dues-history h2 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.dues-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 70px;
+  padding: 14px 20px;
+  background: #414141;
+  color: #ccc;
+  font-size: 12px;
+  margin: 0 -22px;
+}
+
+@media (max-width: 900px) {
+  .student-details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dues-student-photo {
+    grid-column: 1 / -1;
+  }
+
+  .dues-student-photo img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .dues-footer {
+    flex-wrap: wrap;
+    gap: 10px 25px;
+  }
+}
+
+/* Transport page */
+.transport-page {
+  padding: 10px 22px 0;
+  min-height: calc(100vh - 88px);
+  background: #eee;
+}
+
+.transport-subtabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  height: 49px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(#fdfdfd, #e9e9e9);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px #ccc;
+}
+
+.transport-subtab {
+  height: 100%;
+  padding: 0 13px;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.transport-subtab:hover {
+  background: #eee;
+}
+
+.transport-subtab.active {
+  background: transparent;
+  font-weight: normal;
+}
+
+.transport-panel {
+  min-height: 127px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.transport-panel-heading {
+  display: flex;
+  align-items: center;
+  height: 43px;
+  background: linear-gradient(#fff, #e7e7e7);
+  border-bottom: 1px solid #ccc;
+  color: #666;
+  font-size: 18px;
+}
+
+.transport-menu-icon {
+  display: grid;
+  place-items: center;
+  width: 41px;
+  height: 100%;
+  margin-right: 15px;
+  border-right: 1px solid #ddd;
+  color: #888;
+}
+
+.transport-form {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 81px;
+  padding: 0 80px;
+  font-size: 13px;
+}
+
+.transport-form label {
+  white-space: nowrap;
+}
+
+.transport-form select {
+  width: 258px;
+  height: 34px;
+  padding: 5px 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #555;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .transport-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .transport-form {
+    padding: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .transport-form select {
+    max-width: 100%;
+  }
+
+  .transport-subtab {
+    padding: 0 9px;
+  }
+}
+
+/* Hostel page */
+.hostel-page {
+  padding: 10px 22px 0;
+  background: #eee;
+  min-height: calc(100vh - 88px);
+}
+
+.hostel-subtabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  margin: 20px 0;
+  background: linear-gradient(#fafafa, #e8e8e8);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px #ccc;
+}
+
+.hostel-subtab {
+  height: 100%;
+  padding: 0 12px;
+  background: transparent;
+  border: 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.hostel-panel {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding-bottom: 40px;
+}
+
+.hostel-panel-heading {
+  display: flex;
+  align-items: center;
+  height: 43px;
+  background: linear-gradient(#fff, #e7e7e7);
+  border-bottom: 1px solid #ccc;
+  color: #666;
+  font-size: 18px;
+}
+
+.hostel-menu-icon {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 41px;
+  margin-right: 15px;
+  border-right: 1px solid #ddd;
+}
+
+.hostel-profile {
+  display: grid;
+  grid-template-columns: 1.35fr 0.9fr 1.1fr 120px;
+  gap: 24px;
+  padding: 14px;
+  align-items: start;
+}
+
+.hostel-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.hostel-details-table th,
+.hostel-details-table td {
+  padding: 9px 8px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  line-height: 20px;
+}
+
+.hostel-details-table th {
+  text-align: right;
+  font-weight: normal;
+  color: #555;
+  background: linear-gradient(#fff, #e9e9e9);
+}
+
+.hostel-details-table td {
+  color: #333;
+  overflow-wrap: anywhere;
+}
+
+.hostel-photo {
+  width: 118px;
+  height: 118px;
+  object-fit: cover;
+  padding: 4px;
+  border: 2px solid #444;
+  outline: 1px solid #aaa;
+}
+
+.hostel-wallet {
+  padding: 4px 14px 20px;
+  text-align: right;
+  color: #00e;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.hostel-tabs {
+  display: flex;
+  align-items: end;
+  margin: 0 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.hostel-tab {
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #1683c5;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.hostel-tab.active {
+  color: #555;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: #fff;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: -1px;
+}
+
+.hostel-section-title {
+  margin: 0 14px;
+  padding: 21px 12px;
+  background: #e9e9e9;
+  font-size: 17px;
+}
+
+.hostel-table-title {
+  margin: 28px 14px 24px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.hostel-data-table {
+  width: calc(100% - 28px);
+  margin: 0 14px;
+  border-collapse: collapse;
+  color: #444;
+  font-size: 13px;
+}
+
+.hostel-data-table th {
+  text-align: left;
+  padding: 11px 10px;
+  background: linear-gradient(#fff, #e7e7e7);
+  border-bottom: 1px solid #ddd;
+  font-weight: 600;
+}
+
+.hostel-data-table td {
+  padding: 11px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.hostel-data-table.bordered {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.hostel-total {
+  text-align: center;
+  font-weight: bold;
+  background: linear-gradient(#fff, #e7e7e7);
+}
+
+.hostel-applicable-title {
+  margin: 30px 14px 8px;
+  color: #999;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.hostel-empty {
+  font-style: italic;
+  padding: 12px !important;
+}
+
+.hostel-receipt-tabs {
+  margin-top: 20px;
+}
+
+.hostel-result-count {
+  margin: 100px 28px 8px;
+  text-align: right;
+  font-size: 13px;
+}
+
+.hostel-link {
+  color: #0783d1;
+  cursor: pointer;
+}
+
+.hostel-history-content {
+  padding: 35px 14px;
+}
+
+.hostel-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 70px;
+  padding: 14px 20px;
+  margin: 0 -22px;
+  background: #414141;
+  color: #ccc;
+  font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+  .hostel-profile {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hostel-photo {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 650px) {
+  .hostel-page {
+    padding: 10px;
+  }
+
+  .hostel-profile {
+    grid-template-columns: 1fr;
+  }
+
+  .hostel-photo {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .hostel-data-table {
+    min-width: 750px;
+  }
+
+  .hostel-panel {
+    overflow-x: auto;
+  }
+
+  .hostel-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 -10px;
+  }
+}
+
+.accounts-home {
+    background: transparent;
+    color: #111;
+}
+
+.accounts-home:hover {
+    background: #f3f3f3;
+    color: #111;
 }

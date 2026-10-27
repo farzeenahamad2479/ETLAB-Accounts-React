@@ -1,0 +1,155 @@
+
+.wallet-page {
+    padding: 0 18px 24px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.wallet-panel {
+    border: 1px solid #d2d2d2;
+    background: #fff;
+    margin-bottom: 18px;
+}
+
+.wallet-panel-heading {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(#fafafa, #e7e7e7);
+    border-bottom: 1px solid #d0d0d0;
+    color: #555;
+    font-size: 18px;
+}
+
+.panel-menu-icon {
+    width: 41px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #d0d0d0;
+    color: #666;
+    font-size: 17px;
+}
+
+.wallet-balance-area {
+    min-height: 294px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 29px 20px 24px;
+}
+
+.wallet-balance-card {
+    width: min(760px, 90%);
+    min-height: 120px;
+    background: #f4f4f4;
+    border: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    color: #222;
+    font-size: 16px;
+}
+
+.wallet-amount {
+    color: #50b65b;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.wallet-add-button {
+    margin-top: 20px;
+    width: 64px;
+    height: 54px;
+    border: 2px solid #aaa;
+    border-radius: 12px;
+    background: #f5f5f5;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.wallet-add-button:hover {
+    background: #eaeaea;
+}
+
+.transactions-panel {
+    margin-top: 0;
+}
+
+.transactions-table-wrapper {
+    padding: 14px 18px 34px;
+    overflow-x: auto;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    font-size: 14px;
+}
+
+.transactions-table th {
+    text-align: left;
+    color: #1686c9;
+    background: linear-gradient(#fff, #e8e8e8);
+    border: 1px solid #d6d6d6;
+    padding: 8px;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.transactions-table td {
+    border: 1px solid #ddd;
+    padding: 5px 7px;
+}
+
+.transaction-filters input,
+.transaction-filters select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 85px;
+    height: 33px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    padding: 4px 6px;
+    font: inherit;
+}
+
+.no-transactions {
+    background: #fafafa;
+    font-style: italic;
+    color: #444;
+}
+
+@media (max-width: 700px) {
+    .wallet-page {
+        padding: 0 8px 18px;
+    }
+
+    .wallet-balance-card {
+        width: 100%;
+    }
+
+    .transactions-table-wrapper {
+        padding: 10px;
+    }
+}
+
+.wallet-add-button {
+    margin-top: 20px;
+    width: 64px;
+    height: 54px;
+    border: 2px solid #aaa;
+    border-radius: 12px;
+    background: #f5f5f5;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
