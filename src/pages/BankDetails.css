@@ -125,3 +125,150 @@
         border: none;
     }
 }
+
+/* Bank details update form */
+
+.bank-update-panel {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.bank-update-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 15px;
+    background: linear-gradient(#fff, #e8e8e8);
+    border-bottom: 1px solid #ccc;
+    color: #52677b;
+    font-size: 18px;
+}
+
+.bank-close-button {
+    border: none;
+    background: transparent;
+    color: #555;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.bank-update-form {
+    padding: 20px;
+}
+
+.bank-form-note {
+    margin: 0 0 18px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.bank-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.bank-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.bank-form-field label {
+    font-weight: 600;
+    color: #52677b;
+}
+
+.bank-form-field input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 39px;
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font: inherit;
+}
+
+.bank-form-field input:focus {
+    border-color: #337ab7;
+    outline: 2px solid rgba(51, 122, 183, 0.15);
+}
+
+.bank-field-error {
+    color: #c62828;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.bank-form-message {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.bank-form-message.error {
+    border: 1px solid #efb7b7;
+    background: #fff0f0;
+    color: #a32121;
+}
+
+.bank-form-message.success {
+    border: 1px solid #b6dfc0;
+    background: #eefaf0;
+    color: #216e35;
+}
+
+.bank-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.bank-form-actions button {
+    min-height: 38px;
+    padding: 9px 15px;
+    border-radius: 4px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.bank-cancel-button {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+}
+
+.bank-submit-button {
+    border: 1px solid #286090;
+    background: #337ab7;
+    color: #fff;
+}
+
+.bank-submit-button:hover {
+    background: #286090;
+}
+
+@media (max-width: 700px) {
+    .bank-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bank-update-form {
+        padding: 12px;
+    }
+}
+
+@media print {
+    .bank-update-panel {
+        display: none;
+    }
+}

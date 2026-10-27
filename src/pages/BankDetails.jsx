@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import AccountsTabs from "../components/AccountsTabs";
 import "./BankDetails.css";
 
@@ -14,16 +15,130 @@ const bankDetails = [
     ["IFSC Code", "CNRB0014205"],
 ];
 
+const initialForm = {
+    accountHolder: "",
+    accountNumber: "",
+    confirmAccountNumber: "",
+    bankName: "",
+    branchName: "",
+    ifsc: "",
+    mobile: "",
+};
+
 function BankDetails() {
+    const [showForm, setShowForm] = useState(false);
+    const [form, setForm] = useState(initialForm);
+    const [errors, setErrors] = useState({});
+    const [message, setMessage] = useState(null);
+
     const handlePrint = () => window.print();
 
-    const handleGeneratePDF = () => {
-        window.print();
-    };
+    const handleGeneratePDF = () => window.print();
 
-    const handleRequestUpdate = () => {
-        window.alert("Your bank details update request has been noted.");
-    };
+    function handleRequestUpdate() {
+        setForm(initialForm);
+        setErrors({});
+        setMessage(null);
+        setShowForm(true);
+    }
+
+    function handleChange(event) {
+        const { name, value } = event.target;
+
+        setForm((previous) => ({
+            ...previous,
+            [name]: value,
+        }));
+
+        setErrors((previous) => ({
+            ...previous,
+            [name]: "",
+            confirmAccountNumber:
+                name === "accountNumber" ||
+                name === "confirmAccountNumber"
+                    ? ""
+                    : previous.confirmAccountNumber,
+        }));
+
+        setMessage(null);
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const newErrors = {};
+
+        if (!form.accountHolder.trim()) {
+            newErrors.accountHolder = "Enter the account holder name.";
+        }
+
+        if (!form.accountNumber.trim()) {
+            newErrors.accountNumber = "Enter the bank account number.";
+        } else if (!/^\d{8,20}$/.test(form.accountNumber.trim())) {
+            newErrors.accountNumber =
+                "Account number must contain 8–20 digits.";
+        }
+
+        if (!form.confirmAccountNumber.trim()) {
+            newErrors.confirmAccountNumber =
+                "Confirm your bank account number.";
+        } else if (
+            form.accountNumber.trim() !==
+            form.confirmAccountNumber.trim()
+        ) {
+            newErrors.confirmAccountNumber =
+                "Account numbers do not match.";
+        }
+
+        if (!form.bankName.trim()) {
+            newErrors.bankName = "Enter the bank name.";
+        }
+
+        if (!form.branchName.trim()) {
+            newErrors.branchName = "Enter the branch name.";
+        }
+
+        if (!form.ifsc.trim()) {
+            newErrors.ifsc = "Enter the IFSC code.";
+        } else if (
+            !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(
+                form.ifsc.trim().toUpperCase()
+            )
+        ) {
+            newErrors.ifsc =
+                "Enter a valid IFSC code (e.g. ABCD0123456).";
+        }
+
+        if (!form.mobile.trim()) {
+            newErrors.mobile = "Enter your mobile number.";
+        } else if (!/^[6-9]\d{9}$/.test(form.mobile.trim())) {
+            newErrors.mobile =
+                "Enter a valid 10-digit Indian mobile number.";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            setMessage({
+                type: "error",
+                text: "Please correct the errors below.",
+            });
+            return;
+        }
+
+        // Frontend demonstration only; nothing is sent or saved.
+        setErrors({});
+        setMessage({
+            type: "success",
+            text: "Form validated successfully! This is a demo only; no bank update request was submitted.",
+        });
+    }
+
+    function handleCancel() {
+        setShowForm(false);
+        setForm(initialForm);
+        setErrors({});
+        setMessage(null);
+    }
 
     return (
         <div className="bank-details-page">
@@ -35,6 +150,7 @@ function BankDetails() {
 
                     <div className="bank-details-actions">
                         <button
+                            type="button"
                             className="bank-btn print-btn"
                             onClick={handlePrint}
                         >
@@ -42,6 +158,7 @@ function BankDetails() {
                         </button>
 
                         <button
+                            type="button"
                             className="bank-btn pdf-btn"
                             onClick={handleGeneratePDF}
                         >
@@ -49,6 +166,7 @@ function BankDetails() {
                         </button>
 
                         <button
+                            type="button"
                             className="bank-btn update-btn"
                             onClick={handleRequestUpdate}
                         >
@@ -79,6 +197,190 @@ function BankDetails() {
                     </table>
                 </div>
             </section>
+
+            {showForm && (
+                <section className="bank-update-panel">
+                    <div className="bank-update-heading">
+                        <span>Request Bank Details Update</span>
+                        <button
+                            type="button"
+                            className="bank-close-button"
+                            onClick={handleCancel}
+                            aria-label="Close form"
+                        >
+                            ×
+                        </button>
+                    </div>
+
+                    <form
+                        className="bank-update-form"
+                        onSubmit={handleSubmit}
+                        noValidate
+                    >
+                        <p className="bank-form-note">
+                            Enter the details you want to request for update.
+                            This demo does not submit or store bank details.
+                        </p>
+
+                        <div className="bank-form-grid">
+                            <div className="bank-form-field">
+                                <label htmlFor="accountHolder">
+                                    Account Holder Name *
+                                </label>
+                                <input
+                                    id="accountHolder"
+                                    name="accountHolder"
+                                    value={form.accountHolder}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                                {errors.accountHolder && (
+                                    <span className="bank-field-error">
+                                        {errors.accountHolder}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="bank-form-field">
+                                <label htmlFor="accountNumber">
+                                    Bank Account Number *
+                                </label>
+                                <input
+                                    id="accountNumber"
+                                    name="accountNumber"
+                                    type="password"
+                                    inputMode="numeric"
+                                    value={form.accountNumber}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                                {errors.accountNumber && (
+                                    <span className="bank-field-error">
+                                        {errors.accountNumber}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="bank-form-field">
+                                <label htmlFor="confirmAccountNumber">
+                                    Confirm Account Number *
+                                </label>
+                                <input
+                                    id="confirmAccountNumber"
+                                    name="confirmAccountNumber"
+                                    type="password"
+                                    inputMode="numeric"
+                                    value={form.confirmAccountNumber}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                                {errors.confirmAccountNumber && (
+                                    <span className="bank-field-error">
+                                        {errors.confirmAccountNumber}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="bank-form-field">
+                                <label htmlFor="bankName">Bank Name *</label>
+                                <input
+                                    id="bankName"
+                                    name="bankName"
+                                    value={form.bankName}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                                {errors.bankName && (
+                                    <span className="bank-field-error">
+                                        {errors.bankName}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="bank-form-field">
+                                <label htmlFor="branchName">Branch Name *</label>
+                                <input
+                                    id="branchName"
+                                    name="branchName"
+                                    value={form.branchName}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                                {errors.branchName && (
+                                    <span className="bank-field-error">
+                                        {errors.branchName}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="bank-form-field">
+                                <label htmlFor="ifsc">IFSC Code *</label>
+                                <input
+                                    id="ifsc"
+                                    name="ifsc"
+                                    value={form.ifsc}
+                                    onChange={handleChange}
+                                    maxLength={11}
+                                    autoCapitalize="characters"
+                                    autoComplete="off"
+                                />
+                                {errors.ifsc && (
+                                    <span className="bank-field-error">
+                                        {errors.ifsc}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="bank-form-field">
+                                <label htmlFor="mobile">
+                                    Mobile Number *
+                                </label>
+                                <input
+                                    id="mobile"
+                                    name="mobile"
+                                    type="tel"
+                                    inputMode="numeric"
+                                    maxLength={10}
+                                    value={form.mobile}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                                {errors.mobile && (
+                                    <span className="bank-field-error">
+                                        {errors.mobile}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        {message && (
+                            <div
+                                className={`bank-form-message ${message.type}`}
+                                role={message.type === "error" ? "alert" : "status"}
+                            >
+                                {message.text}
+                            </div>
+                        )}
+
+                        <div className="bank-form-actions">
+                            <button
+                                type="button"
+                                className="bank-cancel-button"
+                                onClick={handleCancel}
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                className="bank-submit-button"
+                            >
+                                Validate Request
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            )}
         </div>
     );
 }
