@@ -7,7 +7,7 @@ const bankDetails = [
     ["Name", "FARSEEN AHAMAD K P"],
     ["Department", "COMPUTER SCIENCE & ENGINEERING"],
     ["Bank Account No.", "110123831904"],
-    ["Account Holder Name", "Farzeen Ahamad KP"],
+    ["Account Holder Name", "Farseen Ahamad KP"],
     ["Mobile Number", "8648909090"],
     ["Bank Name", "Canara Bank"],
     ["Branch Name", "Taliparamba Canara Bank"],
